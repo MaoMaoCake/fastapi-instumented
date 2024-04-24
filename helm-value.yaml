@@ -1,0 +1,16 @@
+image:
+  repository: registry.orion.jirapongpansak.com/dev-jirapong/fastapi
+  tag: latest
+imagePullSecrets:
+  - registry-secret
+
+containerPort: 8000
+vars:
+  OTEL_RESOURCE_ATTRIBUTES: "service.name=fastapp"
+  OTEL_EXPORTER_OTLP_ENDPOINT: "http://grafana-agent.opstella-monitoring.svc.cluster.local:4317"
+  OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
+
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  host: fastapi.orion.jirapongpansak.com
