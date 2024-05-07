@@ -10,8 +10,6 @@ def print_config():
         }
         
         output {
-            metrics = [otelcol.exporter.otlp.tempo%s.input]
-            logs    = [otelcol.exporter.otlp.tempo%s.input]
             traces  = [otelcol.exporter.otlp.tempo%s.input]
         }
     }
@@ -30,10 +28,10 @@ def print_config():
     }
     '''
     # print([ 1 for _ in range(7)])
-    print("".join([config % (i,i,i,i,i,i,i) for i in range(1000)]))
+    print("".join([config % (i,i,i,i,i) for i in range(1000)]))
 
 def print_outputs():
     print(str([f"otelcol.processor.filter.app{i}.input" for i in range(1000)]).replace("'", ''))
 
-# print_config()
-print_outputs()
+print_config()
+# print_outputs()
