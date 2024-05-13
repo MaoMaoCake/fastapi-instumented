@@ -69,6 +69,12 @@ async def read_root():
 
 @app.get("/ping")
 async def health_check():
+    logging.info("Ping testing")
+    if random.random() < 0.1:
+        logging.warning("Triggering Sleep")
+        time.sleep(random.uniform(0.01,1))
+        logging.error("Triggered Intentional Error")
+        raise Exception("Intentional Error")
     return "pong"
 
 
@@ -84,8 +90,16 @@ async def read_item(item_id: int, q: str = None):
 @app.get("/exception")
 async def exception():
     time.sleep(random.uniform(0, 3))
+    logging.error(f"Exception: {sys.exc_info()[0]}")
     raise Exception("exception")
 
+@app.get("/sleep")
+async def sleep():
+    sleeping = random.uniform(0, 0.1)
+    logging.info(f"sleeping: {sleeping}")
+    time.sleep(sleeping)
+
+    return
 
 @app.get("/spanned_request")
 async def spanned_request():
@@ -104,4 +118,7 @@ async def spanned_request():
             time.sleep(1)
             for _ in range(100):
                 res_list.append(random.randint(1, 10) + random.randint(1, 10))
+        if res_list[0] > 5:
+            logging.error("Intentional Error")
+            raise Exception("Intentional Error")
         return res_list

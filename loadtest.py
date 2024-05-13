@@ -15,10 +15,12 @@ class TestThread(threading.Thread):
         requests.get(self.url, verify=False)
 
 
-choices = ["http://127.0.0.1:8001", "http://127.0.0.1:8002", "http://127.0.0.1:8003", "http://127.0.0.1:8004",
-           "http://127.0.0.1:8010", "http://127.0.0.1:8011", "http://127.0.0.1:8012", "http://127.0.0.1:8013",
-           "http://127.0.0.1:8014"]
-for i in range(100000):
+choices = ["http://127.0.0.1:8001/ping", "http://127.0.0.1:8001/spanned_request", "http://127.0.0.1:8001/exception", "http://127.0.0.1:8001/sleep", "http://127.0.0.1:8001/invalid", "http://127.0.0.1:8001/foobar", "http://127.0.0.1:8002/ping", "http://127.0.0.1:8002/spanned_request", "http://127.0.0.1:8002/exception", "http://127.0.0.1:8002/sleep", "http://127.0.0.1:8002/invalid", "http://127.0.0.1:8002/foobar"]
+# for i in range(100_000):
+i = 0
+while True:
+    i += 1
     print(f"iteration {i}")
     url = random.choice(choices)
+    time.sleep(random.uniform(0,2))
     TestThread(url).start()
