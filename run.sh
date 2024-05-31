@@ -1,7 +1,8 @@
 #!/usr/bin/sh
 
-export OTEL_RESOURCE_ATTRIBUTES=service.name=fastapp1-frontend
+export OTEL_RESOURCE_ATTRIBUTES=service.name=fastapp1-backend
 export OTEL_EXPORTER_OTLP_ENDPOINT=http://10.33.254.232:4317/
+#export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:12345/
 export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
 export OTEL_METRICS_EXPORTER=none
 export OTEL_LOGS_EXPORTER=otlp,console

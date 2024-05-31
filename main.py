@@ -46,6 +46,7 @@ handler = LoggingHandler(level=logging.NOTSET, logger_provider=logger_provider)
 # Attach OTLP handler to root logger
 logging.getLogger().addHandler(handler)
 
+shared_error_chance = 0
 
 @app.get("/foobar")
 async def foobar():
@@ -122,3 +123,16 @@ async def spanned_request():
             logging.error("Intentional Error")
             raise Exception("Intentional Error")
         return res_list
+
+@app.get("/setter/{error_chance}")
+def set_error_chance(error_chance: int): # please dont do this in actual code
+    global shared_error_chance
+    shared_error_chance = max(min(error_chance, 100), 0) # force rate to o to 100
+    return shared_error_chance
+
+@app.get("/controlled_error")
+def controlled_error():
+    random_number = random.randint(0, 100)
+    if random_number <= shared_error_chance:
+        raise Exception(f"Intentional Chance Error {shared_error_chance}")
+    else: return random_number
