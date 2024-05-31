@@ -133,6 +133,6 @@ def set_error_chance(error_chance: int): # please dont do this in actual code
 @app.get("/controlled_error")
 def controlled_error():
     random_number = random.randint(0, 100)
-    if random_number <= shared_error_chance:
+    if random_number < shared_error_chance:
         raise Exception(f"Intentional Chance Error {shared_error_chance}")
     else: return random_number
