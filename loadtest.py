@@ -23,5 +23,5 @@ while True:
     i += 1
     print(f"iteration {i}")
     url = random.choice(choices)
-    time.sleep(random.uniform(0,2))
+    time.sleep(random.uniform(0,0.01))
     TestThread(url).start()
